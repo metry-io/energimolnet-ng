@@ -61,11 +61,21 @@ angular.module('myApp').run([
   'emAuth',
   function($rootScope, $window, Auth) {
     $rootScope.$on('em:loginNeeded', function() {
-      var appUri = 'http://energyapplication.mycompany.net';
-      $window.location.href = Auth.loginUrl(appUri);
+      $window.location.href = Auth.authorizeUrl();
     });
   }
 ]);
+```
+
+Once the authentication is completed, the user will be redirected to the provided `redirectUri`. The oAuth auth code will be appended as a `?code=<auth code>` to the uri. You need to define a state in your app that catches the refresh token and hands it over to the emAuth service. The emAuth service will then use this code to fetch a refresh and access token.
+
+```
+// Somewhere in your initial code where emAuth is injected.
+// var authCode = // extract code from url, e.g. by using $location.search
+
+emAuth.handleAuthCode(authCode).then(function() {
+  // App is ready to request data from API
+})
 ```
 
 ### Private token
@@ -114,7 +124,7 @@ The returned objects from the first four methods are [promises](https://docs.ang
 
 ```
 {
-  data: [<response list, e.g. a list of the user´s available contracts>],
+  data: [<response list, e.g. a list of the user´s available meters>],
   pagination: {
     skip: <index of first returned item>,
     limit: <number of items per result page>,
@@ -131,18 +141,18 @@ See below for response of `forAccount()` method.
 
 #### query(params)
 
-The query method is used to list all (or a subset of all) items of a type. A common example is to list all the contracts a user can acess.
+The query method is used to list all (or a subset of all) items of a type. A common example is to list all the meters a user can acess.
 
 If `params` is undefined, the query will return all items of the collection type that the authenticated user has access to.
 
 ```
-angular.module('myModule').controller('myContractsController', [
-  'emContracts',
-  function(Contracts) {
+angular.module('myModule').controller('myMetersController', [
+  'emMeters',
+  function(Meters) {
     var vm = this;
 
-    Contracts.query().then(function(result) {
-      vm.contracts =  result.data;
+    Meters.query().then(function(result) {
+      vm.meters =  result.data;
       vm.pagination = result.pagination;
     }, function(error) {
       // "handle" error
@@ -152,17 +162,17 @@ angular.module('myModule').controller('myContractsController', [
   }
 ]);
 
-angular.module('myModule').controller('myContractsSearchController', [
+angular.module('myModule').controller('myMetersSearchController', [
   '$scope',
-  'emContracts',
-  function($scope, Contracts) {
+  'emMeters',
+  function($scope, Meters) {
     var vm = this;
 
-    $scope.$watch('contractsSearch', function(newSearch, oldSearch) {
+    $scope.$watch('metersSearch', function(newSearch, oldSearch) {
       if (newSearch === oldSearch) return;
 
-      Contracts.query({name: newSearch}).then(function(result) {
-        vm.foundContracts =  result.data;
+      Meters.query({name: newSearch}).then(function(result) {
+        vm.foundMeters =  result.data;
         vm.pagination = result.pagination;
       }, function(error) {
         console.log(error);
@@ -216,7 +226,7 @@ angular.module('myModule').controller('myOwnersController', [
 
 This method only exists on the Consumptions collection and replaces the `get(modelId)` method.
 
-The `granularity` argument accepts a string, currenly 'hour', 'day', or 'month'. The granuliarity is the desired time unit for the consumptions. Note that some meters only have month values. Check the `consumption_stats` object on the contract to see what data is available to the user.
+The `granularity` argument accepts a string, currenly 'hour', 'day', or 'month'. The granuliarity is the desired time unit for the consumptions. Note that some meters only have month values. Check the `consumption_stats` object on the meter to see what data is available to the user.
 
 The `periods` argument should be an array of request periods. Periods are strings in the format "YYYYMMDDHHMM". The required date units depend on the granularity. The easiest way to create a period is by using `getPeriod(dates, granularity)` from the `DateUtil` module.
 
