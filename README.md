@@ -10,6 +10,8 @@ npm install energimolnet-ng
 
 The SDK depends on Angular. However, it is not listed as a dependency which means you can choose where to get it from (i.e. bower/npm/other package manager). It has been tested with Angular 1.3. and 1.4.
 
+Depending on how you build your app, you can either include it by requiring the module (with Browserify/webpack), or by including the `energimolnet-user.min.js` file in a `<script>` tag.
+
 ## Building
 
 There should be little need for building the library yourself (except for when helping us fix bugs ;) ). Building requires node.js. Simply clone this repo, and run
