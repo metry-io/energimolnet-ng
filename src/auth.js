@@ -70,7 +70,8 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
 
       // Check for private api token
       if (token) {
-        config.headers = {Authorization: 'OAuth ' + token};
+        config.headers = config.headers || {};
+        config.headers.Authorization = 'OAuth ' + token;
         resolve(config);
         return;
       }
@@ -91,7 +92,8 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
       }
 
       ensureAccessToken(refreshToken).then(function(accessToken) {
-        config.headers = {Authorization: 'Bearer ' + accessToken.access_token};
+        config.headers = config.headers || {};
+        config.headers.Authorization = 'Bearer ' + accessToken.access_token;
         resolve(config);
       }, function() {
         reject();

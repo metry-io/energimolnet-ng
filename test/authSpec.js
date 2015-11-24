@@ -281,4 +281,29 @@ describe('Energimolnet Auth', function() {
 
     $rootScope.$digest();
   });
+
+  it('should respect custom headers set', function() {
+    var config = {
+      headers: {
+        CustomHeader: 'custom'
+      }
+    };
+
+    auth.setRefreshToken(refreshToken);
+
+    // Inject a token into localStorage
+    $window.localStorage.setItem('emAccessToken', JSON.stringify({
+      access_token: "130f6d30ef95d9c16a82d311fb32c852c8398cbb",
+      expires_at: 2146694400000,
+      scope: "basic",
+      token_type: "Bearer"
+    }));
+
+    auth.authorize(config).then(function(authorizedConfig) {
+      var customHeader = authorizedConfig.headers.CustomHeader;
+      expect(customHeader).toBe('custom');
+    });
+
+    $rootScope.$digest();
+  });
 });
