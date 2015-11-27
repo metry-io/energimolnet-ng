@@ -161,7 +161,7 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
       client_id: authConfig.clientId,
       client_secret: authConfig.clientSecret,
       grant_type: 'refresh_token',
-      scope: 'basic',
+      scope: authConfig.scope || 'basic',
       refresh_token: refreshToken
     });
   }
@@ -174,7 +174,7 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
       grant_type: 'authorization_code',
       response_type: 'code',
       state: 'emAuth',
-      scope: 'basic'
+      scope: authConfig.scope || 'basic'
     };
 
     return makeUrl([BASE_URL, PATH_AUTHORIZE], params);
@@ -187,7 +187,7 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
       client_id: authConfig.clientId,
       client_secret: authConfig.clientSecret,
       state: 'emAuth',
-      scope: 'basic',
+      scope: authConfig.scope || 'basic',
       redirect_uri: authConfig.redirectUri
     }).then(function(res) {
       var token = res.data;
