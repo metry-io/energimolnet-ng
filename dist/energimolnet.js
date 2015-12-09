@@ -7,8 +7,6 @@ var makeUrl = require('./util/makeurl');
 
 var PATH_TOKEN =          'oauth/token';
 var PATH_AUTHORIZE =        'oauth/authorize';
-var PATH_SIGN_IN =        'security/signin';
-var PATH_SIGN_OUT =       'security/signout';
 
 var KEY_PRIVATE_TOKEN =   'emPrivateToken';
 var KEY_REFRESH_TOKEN =   'emRefreshToken';
@@ -198,22 +196,12 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
     });
   }
 
-  function loginUrl(redirect) {
-    return makeUrl([BASE_URL, PATH_SIGN_IN]) + '?redirect=' + encodeURIComponent(redirect);
-  }
-
-  function logoutUrl(redirect) {
-    return makeUrl([BASE_URL,PATH_SIGN_OUT]) + '?redirect=' + encodeURIComponent(redirect);
-  }
-
   return {
     getPrivateToken: getPrivateToken,
     setPrivateToken: setPrivateToken,
     getRefreshToken: getRefreshToken,
     setRefreshToken: setRefreshToken,
     isAuthenticated: isAuthenticated,
-    loginUrl: loginUrl,
-    logoutUrl: logoutUrl,
     authorizeUrl: authorizeUrl,
     handleAuthCode: handleAuthCode,
     authorize: authorize
