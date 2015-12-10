@@ -113,7 +113,7 @@ function getDate(period) {
 
   return new Date(components[0],                          // hour
                   components[1] ? components[1] - 1 : 0,  // month
-                  components[2] || 1,                     // day
+                  components[2] || 1,                     // day
                   components[3] || 0,                     // hour
                   components[4] || 0,                     // min
                   components[5] || 0);                    // second
