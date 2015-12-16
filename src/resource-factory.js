@@ -1,5 +1,5 @@
 /*
- * This factory generates model collections for Energimolnet.
+ * This factory generates model collections for Metry (a.k.a. Energimolnet)
  * Use the models found in the models folder.
  */
 
@@ -48,14 +48,18 @@ module.exports = function (Api) {
     return value === true ? config.default : value;
 
   }
-  function _emGetResource(id) {
-    return Api.request({
+  function _emGetResource(id, config) {
+    var requestConfig = {
       method: 'GET',
       url: makeUrl([_emPath(this._config, 'get'), id])
-    });
+    };
+
+    if (typeof config === 'object') angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
-  function _emSaveResource(object) {
+  function _emSaveResource(object, config) {
     var method;
     var data = object;
     var path;
@@ -70,14 +74,18 @@ module.exports = function (Api) {
       path = _emPath(this._config, 'post');
     }
 
-    return Api.request({
+    var requestConfig = {
       method: method,
       url: path,
       data: data
-    });
+    };
+
+    if (typeof config === 'object') angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
-  function _emBatchUpdateResources(ids, properties) {
+  function _emBatchUpdateResources(ids, properties, config) {
     var payload = [];
 
     for (var i = 0, len = ids.length; i < len; i++) {
@@ -86,26 +94,38 @@ module.exports = function (Api) {
       payload.push(update);
     }
 
-    return Api.request({
+    var requestConfig = {
       method: 'PUT',
       url: _emPath(this._config, 'batch'),
       data: payload
-    });
+    };
+
+    if (typeof config === 'object') angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
-  function _emQueryResource(params) {
-    return Api.request({
+  function _emQueryResource(params, config) {
+    var requestConfig = {
       method: 'GET',
       url: _emPath(this._config, 'query'),
       params: _removeEmpty(params)
-    });
+    };
+
+    if (config) angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
-  function _emDeleteResource(id) {
-    return Api.request({
+  function _emDeleteResource(id, config) {
+    var requestConfig = {
       method: 'DELETE',
       url: makeUrl([_emPath(this._config, 'delete'), id])
-    });
+    };
+
+    if (typeof config === 'object') angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
   function _emForResource(resourceName, resourceConfig) {

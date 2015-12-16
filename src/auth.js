@@ -10,6 +10,7 @@ var PATH_AUTHORIZE =        'oauth/authorize';
 var KEY_PRIVATE_TOKEN =   'emPrivateToken';
 var KEY_REFRESH_TOKEN =   'emRefreshToken';
 var KEY_ACCESS_TOKEN =    'emAccessToken';
+var KEY_SUBACCOUNT =      'emSubaccount';
 
 module.exports = function($window, $http, $q, authConfig, BASE_URL) {
   var requestQueue = [];
@@ -18,8 +19,10 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
   function getPrivateToken() { return getToken(KEY_PRIVATE_TOKEN); }
   function getRefreshToken() { return getToken(KEY_REFRESH_TOKEN); }
   function getAccessToken() { return getToken(KEY_ACCESS_TOKEN); }
+  function getSubaccount() { return getToken(KEY_SUBACCOUNT); }
 
   function setPrivateToken(token) { setToken(token, KEY_PRIVATE_TOKEN); }
+  function setSubaccount(account) { setToken(account, KEY_SUBACCOUNT); }
 
   function setRefreshToken(token) {
     setToken(token, KEY_REFRESH_TOKEN);
@@ -65,6 +68,13 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
   function authorize(config) {
     return $q(function(resolve, reject) {
       var token = getPrivateToken();
+      var subaccount = getSubaccount();
+
+      // Add subaccount
+      if (subaccount && !config.preventSubaccount) {
+        config.headers = config.headers || {};
+        config.headers['X-Subaccount'] = subaccount;
+      }
 
       // Check for private api token
       if (token) {
@@ -200,6 +210,8 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
     setPrivateToken: setPrivateToken,
     getRefreshToken: getRefreshToken,
     setRefreshToken: setRefreshToken,
+    getSubaccount: getSubaccount,
+    setSubaccount: setSubaccount,
     isAuthenticated: isAuthenticated,
     authorizeUrl: authorizeUrl,
     handleAuthCode: handleAuthCode,

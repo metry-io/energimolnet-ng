@@ -11,6 +11,7 @@ var PATH_AUTHORIZE =        'oauth/authorize';
 var KEY_PRIVATE_TOKEN =   'emPrivateToken';
 var KEY_REFRESH_TOKEN =   'emRefreshToken';
 var KEY_ACCESS_TOKEN =    'emAccessToken';
+var KEY_SUBACCOUNT =      'emSubaccount';
 
 module.exports = function($window, $http, $q, authConfig, BASE_URL) {
   var requestQueue = [];
@@ -19,8 +20,10 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
   function getPrivateToken() { return getToken(KEY_PRIVATE_TOKEN); }
   function getRefreshToken() { return getToken(KEY_REFRESH_TOKEN); }
   function getAccessToken() { return getToken(KEY_ACCESS_TOKEN); }
+  function getSubaccount() { return getToken(KEY_SUBACCOUNT); }
 
   function setPrivateToken(token) { setToken(token, KEY_PRIVATE_TOKEN); }
+  function setSubaccount(account) { setToken(account, KEY_SUBACCOUNT); }
 
   function setRefreshToken(token) {
     setToken(token, KEY_REFRESH_TOKEN);
@@ -66,6 +69,13 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
   function authorize(config) {
     return $q(function(resolve, reject) {
       var token = getPrivateToken();
+      var subaccount = getSubaccount();
+
+      // Add subaccount
+      if (subaccount && !config.preventSubaccount) {
+        config.headers = config.headers || {};
+        config.headers['X-Subaccount'] = subaccount;
+      }
 
       // Check for private api token
       if (token) {
@@ -201,6 +211,8 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
     setPrivateToken: setPrivateToken,
     getRefreshToken: getRefreshToken,
     setRefreshToken: setRefreshToken,
+    getSubaccount: getSubaccount,
+    setSubaccount: setSubaccount,
     isAuthenticated: isAuthenticated,
     authorizeUrl: authorizeUrl,
     handleAuthCode: handleAuthCode,
@@ -897,14 +909,18 @@ module.exports = function (Api) {
     return value === true ? config.default : value;
 
   }
-  function _emGetResource(id) {
-    return Api.request({
+  function _emGetResource(id, config) {
+    var requestConfig = {
       method: 'GET',
       url: makeUrl([_emPath(this._config, 'get'), id])
-    });
+    };
+
+    if (typeof config === 'object') angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
-  function _emSaveResource(object) {
+  function _emSaveResource(object, config) {
     var method;
     var data = object;
     var path;
@@ -919,14 +935,18 @@ module.exports = function (Api) {
       path = _emPath(this._config, 'post');
     }
 
-    return Api.request({
+    var requestConfig = {
       method: method,
       url: path,
       data: data
-    });
+    };
+
+    if (typeof config === 'object') angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
-  function _emBatchUpdateResources(ids, properties) {
+  function _emBatchUpdateResources(ids, properties, config) {
     var payload = [];
 
     for (var i = 0, len = ids.length; i < len; i++) {
@@ -935,26 +955,38 @@ module.exports = function (Api) {
       payload.push(update);
     }
 
-    return Api.request({
+    var requestConfig = {
       method: 'PUT',
       url: _emPath(this._config, 'batch'),
       data: payload
-    });
+    };
+
+    if (typeof config === 'object') angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
-  function _emQueryResource(params) {
-    return Api.request({
+  function _emQueryResource(params, config) {
+    var requestConfig = {
       method: 'GET',
       url: _emPath(this._config, 'query'),
       params: _removeEmpty(params)
-    });
+    };
+
+    if (config) angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
-  function _emDeleteResource(id) {
-    return Api.request({
+  function _emDeleteResource(id, config) {
+    var requestConfig = {
       method: 'DELETE',
       url: makeUrl([_emPath(this._config, 'delete'), id])
-    });
+    };
+
+    if (typeof config === 'object') angular.extend(requestConfig, config);
+
+    return Api.request(requestConfig);
   }
 
   function _emForResource(resourceName, resourceConfig) {

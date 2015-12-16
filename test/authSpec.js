@@ -306,4 +306,59 @@ describe('Energimolnet Auth', function() {
 
     $rootScope.$digest();
   });
+
+  it('should add subaccount headers to requests', function() {
+    var config = {
+      url: '/test'
+    };
+
+    auth.setRefreshToken(refreshToken);
+    auth.setSubaccount('abc123');
+
+    // Inject a token into localStorage
+    $window.localStorage.setItem('emAccessToken', JSON.stringify({
+      access_token: "130f6d30ef95d9c16a82d311fb32c852c8398cbb",
+      expires_at: 2146694400000,
+      scope: "basic",
+      token_type: "Bearer"
+    }));
+
+    auth.authorize(config).then(function(authorizedConfig) {
+      var customHeader = authorizedConfig.headers['X-Subaccount'];
+      expect(customHeader).toBe('abc123');
+
+      // Prevent screwing up next tests
+      auth.setSubaccount(null);
+    });
+
+    $rootScope.$digest();
+  });
+
+  it('should not use subaccounts when preventSubaccount flag is present', function() {
+    var config = {
+      url: '/test',
+      preventSubaccount: true
+    };
+
+    auth.setRefreshToken(refreshToken);
+    auth.setSubaccount('abc123');
+
+    // Inject a token into localStorage
+    $window.localStorage.setItem('emAccessToken', JSON.stringify({
+      access_token: "130f6d30ef95d9c16a82d311fb32c852c8398cbb",
+      expires_at: 2146694400000,
+      scope: "basic",
+      token_type: "Bearer"
+    }));
+
+    auth.authorize(config).then(function(authorizedConfig) {
+      var customHeader = authorizedConfig.headers['X-Subaccount'];
+      expect(customHeader).toBe(undefined);
+
+      // Prevent screwing up next tests
+      auth.setSubaccount(null);
+    });
+
+    $rootScope.$digest();
+  });
 });

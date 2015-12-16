@@ -132,4 +132,16 @@ describe('Resource Factory', function() {
 
     $httpBackend.flush();
   });
+
+  it('should use override config parameters using passed in config', function() {
+    var collection = resourceFactory({
+      default: '/test',
+      get: true
+    });
+
+    $httpBackend.expectPOST(BASE_URL + '/api/2.0/test/12345').respond(200, {});
+    collection.get('12345', {method: 'POST'});
+
+    $httpBackend.flush();
+  });
 });
