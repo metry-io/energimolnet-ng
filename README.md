@@ -1,5 +1,5 @@
 # energimolnet-ng
-Angular SDK for Energimolnet API v2
+Angular SDK for Metry/Energimolnet API v2
 
 ## Installation
 
@@ -39,7 +39,7 @@ The `emAuth` service has a `isAuthenticated()` method that returns whether the u
 
 ### Oauth
 
-In order to use [OAuth](http://en.wikipedia.org/wiki/OAuth), you need to register a `client id` and `client secret` with Energimolnet. Contact [support@energimolnet.se](mailto:support@energimolnet.se) if you are interested in developing services on Energimolnet.
+In order to use [OAuth](http://en.wikipedia.org/wiki/OAuth), you need to register a `client id` and `client secret` with Metry/Energimolnet. Contact [support@energimolnet.se](mailto:support@energimolnet.se) if you are interested in developing services on Metry.
 
 When you have recieved your `client id` and `client secret` for your application, you need to configure the auth service to use these values.
 
@@ -52,7 +52,7 @@ angular.module('myModule').constant('authConfig', {
 });
 ```
 
-Note that the redirectUri is specific for the client, so you'll need to update the client settings on Energimolnet in order to change the URI of your app.
+Note that the redirectUri is specific for the client, so you'll need to update the client settings on Metry in order to change the URI of your app.
 
 When the SDK detects unauthenticated api access, it will emit a `em:loginNeeded` event on `$rootScope`. You should listen to this event and redirect the user to the login URL.
 
