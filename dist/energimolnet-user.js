@@ -220,7 +220,7 @@ module.exports = function($window, $http, $q, authConfig, BASE_URL) {
   };
 };
 
-},{"./util/makeurl":28}],2:[function(require,module,exports){
+},{"./util/makeurl":29}],2:[function(require,module,exports){
 /**
   DateUtil
   --------
@@ -453,7 +453,7 @@ module.exports = function($http, $q, $rootScope, Auth, BASE_URL) {
   };
 };
 
-},{"./util/makeurl":28}],4:[function(require,module,exports){
+},{"./util/makeurl":29}],4:[function(require,module,exports){
 /*
  * This file glues all the separate components together.
  * Angular needs to be globally available.
@@ -487,6 +487,7 @@ ngModule
   .factory('emMetricModels', ['emResourceFactory', require('./models/metric-models')])
   .factory('emOwners', ['emResourceFactory', require('./models/owners')])
   .factory('emPassword', ['emResourceFactory', require('./models/password')])
+  .factory('emReadings', ['emResourceFactory', 'energimolnetAPI', require('./models/readings')])
   .factory('emRefreshTokens', ['emResourceFactory', require('./models/refreshtokens')])
   .factory('emReports', ['emResourceFactory', require('./models/reports')])
   .factory('emRobots', ['emResourceFactory', 'energimolnetAPI', require('./models/robots')])
@@ -495,7 +496,7 @@ ngModule
   .factory('emSubaccounts', ['emResourceFactory', require('./models/subaccounts')])
   .factory('emSubscribers', ['emResourceFactory', 'energimolnetAPI', require('./models/subscribers')]);
 
-},{"./auth":1,"./date-util":2,"./energimolnet-api":3,"./models/accounts":5,"./models/apps":6,"./models/calculated-metrics":7,"./models/complaints":8,"./models/consumption-stats":9,"./models/consumptions":10,"./models/feeds":11,"./models/ftp-connections":12,"./models/invitations":13,"./models/me":14,"./models/meter-stats":15,"./models/meters":16,"./models/metric-models":17,"./models/owners":18,"./models/password":19,"./models/refreshtokens":20,"./models/reports":21,"./models/robot-stats":22,"./models/robots":23,"./models/scrapers":24,"./models/subaccounts":25,"./models/subscribers":26,"./resource-factory":27}],5:[function(require,module,exports){
+},{"./auth":1,"./date-util":2,"./energimolnet-api":3,"./models/accounts":5,"./models/apps":6,"./models/calculated-metrics":7,"./models/complaints":8,"./models/consumption-stats":9,"./models/consumptions":10,"./models/feeds":11,"./models/ftp-connections":12,"./models/invitations":13,"./models/me":14,"./models/meter-stats":15,"./models/meters":16,"./models/metric-models":17,"./models/owners":18,"./models/password":19,"./models/readings":20,"./models/refreshtokens":21,"./models/reports":22,"./models/robot-stats":23,"./models/robots":24,"./models/scrapers":25,"./models/subaccounts":26,"./models/subscribers":27,"./resource-factory":28}],5:[function(require,module,exports){
 module.exports = function(emResourceFactory) {
   var Accounts = emResourceFactory({
     default: '/accounts',
@@ -745,6 +746,29 @@ module.exports = function(emResourceFactory) {
 };
 
 },{}],20:[function(require,module,exports){
+module.exports = function(emResourceFactory, energimolnetAPI) {
+  var Readings = emResourceFactory({
+    default: '/readings'
+  });
+
+  Readings.get = function get(id, granularity, ranges, metrics) {
+    metrics = metrics || ['energy'];
+    metrics = angular.isArray(metrics) ? metrics : [metrics];
+    ranges = angular.isArray(ranges) ? ranges : [ranges];
+
+    return energimolnetAPI.request({
+      method: 'GET',
+      url: [this._config.default, id, granularity, ranges.join('+')].join('/'),
+      params: {
+        metrics: metrics.join(',')
+      }
+    });
+  };
+
+  return Readings;
+};
+
+},{}],21:[function(require,module,exports){
 module.exports = function(emResourceFactory) {
   return emResourceFactory({
     default: '/refreshtokens',
@@ -752,7 +776,7 @@ module.exports = function(emResourceFactory) {
   });
 };
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 module.exports = function(emResourceFactory) {
   return emResourceFactory({
     default: '/reports',
@@ -760,7 +784,7 @@ module.exports = function(emResourceFactory) {
   });
 };
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 module.exports = function(emResourceFactory) {
   return emResourceFactory({
     default: '/stats/robots',
@@ -772,7 +796,7 @@ module.exports = function(emResourceFactory) {
   });
 };
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 module.exports = function(emResourceFactory, energimolnetAPI) {
   var Robots = emResourceFactory({
     default: '/robots',
@@ -793,7 +817,7 @@ module.exports = function(emResourceFactory, energimolnetAPI) {
   return Robots;
 };
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 module.exports = function(emResourceFactory) {
   return emResourceFactory({
     default: '/scrapers',
@@ -802,7 +826,7 @@ module.exports = function(emResourceFactory) {
   });
 };
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 module.exports = function(emResourceFactory) {
   return emResourceFactory({
     forAccount: {
@@ -816,7 +840,7 @@ module.exports = function(emResourceFactory) {
   });
 };
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var makeUrl = require('../util/makeurl');
 
 module.exports = function(emResourceFactory, Api) {
@@ -858,9 +882,9 @@ module.exports = function(emResourceFactory, Api) {
   return Subscribers;
 };
 
-},{"../util/makeurl":28}],27:[function(require,module,exports){
+},{"../util/makeurl":29}],28:[function(require,module,exports){
 /*
- * This factory generates model collections for Energimolnet.
+ * This factory generates model collections for Metry (a.k.a. Energimolnet)
  * Use the models found in the models folder.
  */
 
@@ -1028,7 +1052,7 @@ module.exports = function (Api) {
   return resourceFactory;
 };
 
-},{"./util/makeurl":28}],28:[function(require,module,exports){
+},{"./util/makeurl":29}],29:[function(require,module,exports){
 module.exports = function makeUrl(components, params) {
   components = components == null? [] : !angular.isArray(components) ? [components] : components;
   var fullPath = [];

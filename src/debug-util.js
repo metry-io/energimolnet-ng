@@ -11,38 +11,41 @@
  *
  */
 
-module.exports = function ($window,
-                           emAccounts,
-                           emApps,
-                           emClients,
-                           emComplaints,
-                           emCalculatedMetrics,
-                           emConsumptionStats,
-                           emConsumptions,
-                           emEdielJobs,
-                           emFeeds,
-                           emFileJobs,
-                           emFtpConnections,
-                           emInvitations,
-                           emLoginTokens,
-                           emMe,
-                           emMeters,
-                           emMeterStats,
-                           emMetricModels,
-                           emOwners,
-                           emPassword,
-                           emRefreshTokens,
-                           emReports,
-                           emRobotJobs,
-                           emRobotStats,
-                           emRobots,
-                           emScrapers,
-                           emSubaccounts,
-                           emSubscribers,
-                           emTokens,
-                           emDateUtil,
-                           energimolnetAPI,
-                           emAuth) {
+module.exports = function (
+  $window,
+  emAccounts,
+  emApps,
+  emClients,
+  emComplaints,
+  emCalculatedMetrics,
+  emConsumptionStats,
+  emConsumptions,
+  emEdielJobs,
+  emFeeds,
+  emFileJobs,
+  emFtpConnections,
+  emInvitations,
+  emLoginTokens,
+  emMe,
+  emMeters,
+  emMeterStats,
+  emMetricModels,
+  emOwners,
+  emPassword,
+  emReadings,
+  emRefreshTokens,
+  emReports,
+  emRobotJobs,
+  emRobotStats,
+  emRobots,
+  emScrapers,
+  emSubaccounts,
+  emSubscribers,
+  emTokens,
+  emDateUtil,
+  energimolnetAPI,
+  emAuth
+) {
     function em(func, condensed) {
         func.then(function (res) {
             if (condensed === true) {
@@ -74,6 +77,7 @@ module.exports = function ($window,
     em.MetricModels = emMetricModels;
     em.Owners = emOwners;
     em.Password = emPassword;
+    em.Readings = emReadings;
     em.RefreshTokens = emRefreshTokens;
     em.Reports = emReports;
     em.RobotJobs = emRobotJobs;

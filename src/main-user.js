@@ -31,6 +31,7 @@ ngModule
   .factory('emMetricModels', ['emResourceFactory', require('./models/metric-models')])
   .factory('emOwners', ['emResourceFactory', require('./models/owners')])
   .factory('emPassword', ['emResourceFactory', require('./models/password')])
+  .factory('emReadings', ['emResourceFactory', 'energimolnetAPI', require('./models/readings')])
   .factory('emRefreshTokens', ['emResourceFactory', require('./models/refreshtokens')])
   .factory('emReports', ['emResourceFactory', require('./models/reports')])
   .factory('emRobots', ['emResourceFactory', 'energimolnetAPI', require('./models/robots')])
