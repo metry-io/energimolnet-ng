@@ -20,6 +20,7 @@
 
 module.exports = {
   getDate: getDate,
+  getHourPeriod: getHourPeriod,
   getDayPeriod: getDayPeriod,
   getMonthPeriod: getMonthPeriod,
   getPeriod: getPeriod,
@@ -29,15 +30,18 @@ module.exports = {
 };
 
 function _zeroPaddedString(number) {
-  if (number == null) { return ''; }
+  if (number === null || number === undefined) { return ''; }
 
   return (number < 10 ? '0' : '') + number;
 }
 
-function _periodFormat(year, month, day) {
-  if (month != null) { month ++; }
+function _periodFormat(year, month, day, hour) {
+  if (month !== null && month !== undefined) { month ++; }
 
-  return _zeroPaddedString(year) + _zeroPaddedString(month) + _zeroPaddedString(day);
+  return _zeroPaddedString(year) +
+         _zeroPaddedString(month) +
+         _zeroPaddedString(day) +
+         _zeroPaddedString(hour);
 }
 
 function periodsFormat(dates, func) {
@@ -63,6 +67,16 @@ function getDayPeriod(dates) {
   });
 }
 
+function getHourPeriod(dates) {
+  return periodsFormat(dates, function(date) {
+    return _periodFormat(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours()
+    );
+  });
+}
 // Returns a period for the provided date range, or single date.
 // Will auto-calculate period style depending on granularity, unless force is
 // set to true.

@@ -21,6 +21,7 @@ describe('DateUtil', function() {
       expect(DateUtil.getPeriod(date, 'month')).toEqual('2015');
       expect(DateUtil.getPeriod(date, 'day')).toEqual('201503');
       expect(DateUtil.getPeriod(date, 'hour')).toEqual('20150316');
+      expect(DateUtil.getHourPeriod(date)).toEqual('2015031614');
     });
 
     it('should format range periods correctly', function() {
@@ -30,6 +31,7 @@ describe('DateUtil', function() {
       expect(DateUtil.getPeriod([startDate, endDate], 'month')).toEqual('201502-201503');
       expect(DateUtil.getPeriod([startDate, endDate], 'day')).toEqual('20150214-20150316');
       expect(DateUtil.getPeriod([startDate, endDate], 'hour')).toEqual('20150214-20150316');
+      expect(DateUtil.getHourPeriod([startDate, endDate])).toEqual('2015021414-2015031614');
     });
   });
 
