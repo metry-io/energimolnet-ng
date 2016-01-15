@@ -39,6 +39,7 @@ module.exports = function (
   emRobotStats,
   emRobots,
   emScrapers,
+  emScraperTests,
   emSubaccounts,
   emSubscribers,
   emTokens,
@@ -84,6 +85,7 @@ module.exports = function (
     em.RobotStats = emRobotStats;
     em.Robots = emRobots;
     em.Scrapers = emScrapers;
+    em.ScraperTests = emScraperTests;
     em.Subaccounts = emSubaccounts;
     em.Subscribers = emSubscribers;
     em.Tokens = emTokens;
