@@ -20,6 +20,7 @@ ngModule
 
     .factory('emAccounts', ['emResourceFactory', require('./models/accounts')])
     .factory('emApps', ['emResourceFactory', require('./models/apps')])
+    .factory('emBillableMeters', ['emResourceFactory', require('./models/billable-meters')])
     .factory('emCalculatedMetrics', ['emResourceFactory', require('./models/calculated-metrics')])
     .factory('emClients', ['emResourceFactory', require('./models/clients')])
     .factory('emComplaints', ['emResourceFactory', require('./models/complaints')])
