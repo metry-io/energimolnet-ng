@@ -1,7 +1,7 @@
 module.exports = function(emResourceFactory) {
   return emResourceFactory({
     forAccount: {
-      default: 'billable_summary',
+      default: 'billing_summary',
       get: true,
       put: false,
       post: false,
