@@ -34,6 +34,7 @@ ngModule
     .factory('emLoginTokens', ['emResourceFactory', require('./models/logintokens')])
     .factory('emMe', ['emResourceFactory', require('./models/me')])
     .factory('emMeters', ['emResourceFactory', 'energimolnetAPI', require('./models/meters')])
+    .factory('emMeterActivities', ['emResourceFactory', require('./models/meter-activities')])
     .factory('emMeterStats', ['emResourceFactory', require('./models/meter-stats')])
     .factory('emMetricModels', ['emResourceFactory', require('./models/metric-models')])
     .factory('emOwners', ['emResourceFactory', require('./models/owners')])
