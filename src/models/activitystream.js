@@ -1,6 +1,6 @@
 module.exports = function(emResourceFactory) {
   var ActivityStream = emResourceFactory({
-    default: '/activity_stream',
+    default: '/activityStream',
     get: true,
     query: true,
     put: false,
