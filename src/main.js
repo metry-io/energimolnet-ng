@@ -19,6 +19,7 @@ ngModule
     .factory('emResourceFactory', ['energimolnetAPI', require('./resource-factory')])
 
     .factory('emAccounts', ['emResourceFactory', require('./models/accounts')])
+    .factory('emActivityStreams', ['emResourceFactory', require('./models/activitystream')])
     .factory('emApps', ['emResourceFactory', require('./models/apps')])
     .factory('emBillableMeters', ['emResourceFactory', require('./models/billable-meters')])
     .factory('emCalculatedMetrics', ['emResourceFactory', require('./models/calculated-metrics')])
