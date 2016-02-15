@@ -810,14 +810,15 @@ module.exports = function(emResourceFactory) {
 };
 
 },{}],24:[function(require,module,exports){
+var makeUrl = require('../util/makeurl');
+
 module.exports = function(emResourceFactory, energimolnetAPI) {
   var Robots = emResourceFactory({
     default: '/robots',
     get: true,
     query: true,
     put: true,
-    post: true,
-    delete: true
+    post: true
   });
 
   Robots.run = function(robotId) {
@@ -827,10 +828,23 @@ module.exports = function(emResourceFactory, energimolnetAPI) {
     });
   };
 
+  Robots.delete =  function(id, trashMeters) {
+    var url = makeUrl([this._config.default, id]);
+
+    if (trashMeters) {
+      url += '/trash_meters';
+    }
+
+    return energimolnetAPI.request({
+      method: 'DELETE',
+      url: url
+    });
+  };
+
   return Robots;
 };
 
-},{}],25:[function(require,module,exports){
+},{"../util/makeurl":29}],25:[function(require,module,exports){
 module.exports = function(emResourceFactory) {
   return emResourceFactory({
     default: '/scrapers',

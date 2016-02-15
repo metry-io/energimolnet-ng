@@ -28,4 +28,26 @@ describe('Robots', function() {
 
     $httpBackend.flush();
   });
+
+  it('should be able to delete a robot', function() {
+    var robotId = 'abcd';
+    var url = [BASE_URL, 'api/2.0', 'robots', robotId].join('/');
+
+    $httpBackend.expectDELETE(url).respond(200, {});
+
+    Robots.delete(robotId);
+
+    $httpBackend.flush();
+  });
+
+  it('should be able to trash meters when deleting', function() {
+    var robotId = 'abcd';
+    var url = [BASE_URL, 'api/2.0', 'robots', robotId, 'trash_meters'].join('/');
+
+    $httpBackend.expectDELETE(url).respond(200, {});
+
+    Robots.delete(robotId, true);
+
+    $httpBackend.flush();
+  });
 });
