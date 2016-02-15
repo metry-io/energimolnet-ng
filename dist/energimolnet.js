@@ -598,7 +598,7 @@ ngModule
     .factory('emConsumptions', ['emResourceFactory', 'energimolnetAPI', require('./models/consumptions')])
     .factory('emEdielJobs', ['emResourceFactory', require('./models/ediel-jobs')])
     .factory('emFeeds', ['emResourceFactory', require('./models/feeds')])
-    .factory('emFileJobs', ['emResourceFactory', require('./models/file-jobs')])
+    .factory('emFileJobs', ['emResourceFactory', 'energimolnetAPI', require('./models/file-jobs')])
     .factory('emFtpConnections', ['emResourceFactory', require('./models/ftp-connections')])
     .factory('emInvitations', ['emResourceFactory', require('./models/invitations')])
     .factory('emLoginTokens', ['emResourceFactory', require('./models/logintokens')])
