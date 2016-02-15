@@ -561,14 +561,13 @@ module.exports = function(emResourceFactory) {
 
 },{}],8:[function(require,module,exports){
 module.exports = function(emResourceFactory) {
-  var Complaints = emResourceFactory({
+  return emResourceFactory({
     default: '/complaints',
     get: true,
     query: true,
-    post: true
+    post: true,
+    delete: true
   });
-
-  return Complaints;
 };
 
 },{}],9:[function(require,module,exports){
