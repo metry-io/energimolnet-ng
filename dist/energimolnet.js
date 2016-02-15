@@ -799,8 +799,8 @@ module.exports = function(emResourceFactory) {
 };
 
 },{}],17:[function(require,module,exports){
-module.exports = function(emResourceFactory) {
-  return emResourceFactory({
+module.exports = function(emResourceFactory, energimolnetAPI) {
+  var FileJobs = emResourceFactory({
     default: '/file_jobs',
     get: true,
     query: true,
@@ -808,6 +808,15 @@ module.exports = function(emResourceFactory) {
     save: true,
     delete: true
   });
+
+  FileJobs.reRun = function (id) {
+    return energimolnetAPI.request({
+      method: 'PUT',
+      url: '/file_jobs/' + id + '/release'
+    });
+  };
+
+  return FileJobs;
 };
 
 },{}],18:[function(require,module,exports){
