@@ -60,4 +60,20 @@ describe('Readings', function() {
 
     $httpBackend.flush();
   });
+
+  it('should let a user interpolate reading for a meter', function() {
+    var dummyId = 'id12345';
+    var url = [BASE_URL, 'api/2.0', 'readings', dummyId, 'interpolate'].join('/');
+    var options = {
+      granularity: 'month',
+      period: 201602,
+      max_distance: 20
+    };
+
+    $httpBackend.expectPOST(url, options).respond(200, {});
+
+    Readings.interpolate(dummyId, options);
+
+    $httpBackend.flush();
+  });
 });

@@ -778,6 +778,14 @@ module.exports = function(emResourceFactory, energimolnetAPI) {
     });
   };
 
+  Readings.interpolate = function interpolate(id, options) {
+    return energimolnetAPI.request({
+      method: 'POST',
+      url: [this._config.default, id, 'interpolate'].join('/'),
+      data: options
+    });
+  };
+
   return Readings;
 };
 
