@@ -250,6 +250,7 @@ module.exports = {
   getYearPeriod: getYearPeriod,
   daysInMonth: daysInMonth,
   parseISO: parseISO,
+  periodFromComponents: _periodFormat
 };
 
 function _zeroPaddedString(number) {
