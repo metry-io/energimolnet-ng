@@ -17,6 +17,7 @@ module.exports = function (
   emApps,
   emClients,
   emComplaintCases,
+  emComplaintHandlers,
   emComplaints,
   emCalculatedMetrics,
   emConsumptionStats,
@@ -64,6 +65,7 @@ module.exports = function (
     em.Apps = emApps;
     em.Clients = emClients;
     em.ComplaintCases = emComplaintCases;
+    em.ComplainHandlers = emComplaintHandlers;
     em.Complaints = emComplaints;
     em.CalculatedMetrics = emCalculatedMetrics;
     em.ConsumptionStats = emConsumptionStats;

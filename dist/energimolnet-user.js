@@ -953,12 +953,13 @@ module.exports = function (Api) {
       Resource.prototype.delete = _emDeleteResource;
     }
 
-    if (config.forAccount) {
-      Resource.prototype.forAccount = _emForResource('accounts', config.forAccount);
-    }
+    // Adds forAccount, forMeter, forFeed etc
+    for (var key in config) {
+      if (config.hasOwnProperty(key) && key.startsWith('for')) {
+        var resourceName = key.slice(3).toLowerCase() + 's';
 
-    if (config.forMeter) {
-      Resource.prototype.forMeter = _emForResource('meters', config.forMeter);
+        Resource.prototype[key] = _emForResource(resourceName, config[key]);
+      }
     }
 
     return new Resource();
@@ -1077,7 +1078,8 @@ module.exports = function (Api) {
       var value = object[key];
       var isString = angular.isString(value);
 
-      if (value != null && ((isString && value.length > 0) || !isString)) {
+      if (value !== null && value !== undefined &&
+          ((isString && value.length > 0) || !isString)) {
         params[key] = value;
       }
     }

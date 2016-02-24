@@ -25,6 +25,7 @@ ngModule
     .factory('emCalculatedMetrics', ['emResourceFactory', require('./models/calculated-metrics')])
     .factory('emClients', ['emResourceFactory', require('./models/clients')])
     .factory('emComplaintCases', ['emResourceFactory', 'energimolnetAPI', require('./models/complaint-cases')])
+    .factory('emComplaintHandlers', ['emResourceFactory', require('./models/complaint-handlers')])
     .factory('emComplaints', ['emResourceFactory', require('./models/complaints')])
     .factory('emConsumptionStats', ['emResourceFactory', require('./models/consumption-stats')])
     .factory('emConsumptions', ['emResourceFactory', 'energimolnetAPI', require('./models/consumptions')])
@@ -54,4 +55,4 @@ ngModule
     .factory('emSubscribers', ['emResourceFactory', 'energimolnetAPI', require('./models/subscribers')])
     .factory('emTokens', ['emResourceFactory', require('./models/tokens')])
 
-    .run(['$window', 'emAccounts', 'emApps', 'emClients', 'emComplaintCases', 'emComplaints', 'emCalculatedMetrics', 'emConsumptionStats', 'emConsumptions', 'emEdielJobs', 'emFeeds', 'emFileJobs', 'emFtpConnections', 'emInvitations', 'emLoginTokens', 'emMe', 'emMeters', 'emMeterStats', 'emMetricModels', 'emOwners', 'emPassword', 'emReadings', 'emRefreshTokens', 'emReports', 'emRobotJobs', 'emRobotStats', 'emRobots', 'emScrapers', 'emScraperTests', 'emSubaccounts', 'emSubscribers', 'emTokens', 'emDateUtil', 'energimolnetAPI', 'emAuth', require('./debug-util')]);
+    .run(['$window', 'emAccounts', 'emApps', 'emClients', 'emComplaintCases', 'emComplaintHandlers', 'emComplaints', 'emCalculatedMetrics', 'emConsumptionStats', 'emConsumptions', 'emEdielJobs', 'emFeeds', 'emFileJobs', 'emFtpConnections', 'emInvitations', 'emLoginTokens', 'emMe', 'emMeters', 'emMeterStats', 'emMetricModels', 'emOwners', 'emPassword', 'emReadings', 'emRefreshTokens', 'emReports', 'emRobotJobs', 'emRobotStats', 'emRobots', 'emScrapers', 'emScraperTests', 'emSubaccounts', 'emSubscribers', 'emTokens', 'emDateUtil', 'energimolnetAPI', 'emAuth', require('./debug-util')]);
