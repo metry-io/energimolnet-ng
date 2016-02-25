@@ -1032,9 +1032,13 @@ module.exports = function(emResourceFactory, energimolnetAPI) {
     metrics = angular.isArray(metrics) ? metrics : [metrics];
     ranges = angular.isArray(ranges) ? ranges : [ranges];
 
+    var url = [this._config.default, id, granularity, ranges.join('+')]
+      .filter(function(c) { return c !== null && c !== undefined; })
+      .join('/');
+
     return energimolnetAPI.request({
       method: 'GET',
-      url: [this._config.default, id, granularity, ranges.join('+')].join('/'),
+      url: url,
       params: {
         metrics: metrics.join(',')
       }

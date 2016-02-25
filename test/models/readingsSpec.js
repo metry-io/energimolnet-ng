@@ -21,14 +21,28 @@ describe('Readings', function() {
 
   it('should assume electricity metric unless specified', function() {
     var dummyId = 'id12345';
-    var url = [BASE_URL, 'api/2.0', 'readings', dummyId, 'day', '20150101'].join('/');
-    var urlElectricity = url + '?metrics=energy';
+    var url = [BASE_URL, 'api/2.0', 'readings', dummyId, 'day', '20150101']
+      .join('/') + '?metrics=energy';
 
     auth.setPrivateToken('testing');
 
-    $httpBackend.expectGET(urlElectricity).respond(200, {});
+    $httpBackend.expectGET(url).respond(200, {});
 
     Readings.get(dummyId, 'day', '20150101');
+
+    $httpBackend.flush();
+  });
+
+  it('should request plain readings when granularity is not specified', function() {
+    var dummyId = 'id12345';
+    var url = [BASE_URL, 'api/2.0', 'readings', dummyId, '20150101']
+      .join('/') + '?metrics=energy';
+
+    auth.setPrivateToken('testing');
+
+    $httpBackend.expectGET(url).respond(200, {});
+
+    Readings.get(dummyId, null, '20150101');
 
     $httpBackend.flush();
   });
