@@ -762,7 +762,9 @@ module.exports = function(emResourceFactory) {
 },{}],20:[function(require,module,exports){
 module.exports = function(emResourceFactory, energimolnetAPI) {
   var Readings = emResourceFactory({
-    default: '/readings'
+    default: '/readings',
+    post: true,
+    put: true
   });
 
   Readings.get = function get(id, granularity, ranges, metrics) {
