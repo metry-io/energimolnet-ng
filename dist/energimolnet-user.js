@@ -691,6 +691,15 @@ module.exports = function(emResourceFactory, energimolnetAPI) {
   Meters.share = _emShareAssign(PATH_SHARE);
   Meters.revoke = _emRevoke;
 
+  Meters.recalculateStats = function recalculateStats(meterId) {
+    var url = [this._config.default, meterId, 'stats_recalc'].join('/');
+
+    return energimolnetAPI.request({
+      method: 'PUT',
+      url: url
+    });
+  };
+
   return Meters;
 
   function _emShareAssign(url) {

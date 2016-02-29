@@ -97,5 +97,18 @@ describe('Meters', function() {
      $httpBackend.flush();
     });
   });
+
+  describe('recalculate stats', function() {
+    it('should request consumption stats recalculation with PUT request', function() {
+      var meterId = 'abc123';
+      var url = BASE_URL + 'api/2.0/meters/' + meterId + '/stats_recalc';
+
+      $httpBackend.expectPUT(url).respond(200, {});
+
+     Meters.recalculateStats(meterId);
+
+     $httpBackend.flush();
+    });
+  });
 });
 
