@@ -1267,7 +1267,7 @@ module.exports = function (Api) {
 
     // Adds forAccount, forMeter, forFeed etc
     for (var key in config) {
-      if (config.hasOwnProperty(key) && key.startsWith('for')) {
+      if (config.hasOwnProperty(key) && key.indexOf('for') === 0) {
         var resourceName = key.slice(3).toLowerCase() + 's';
 
         Resource.prototype[key] = _emForResource(resourceName, config[key]);
