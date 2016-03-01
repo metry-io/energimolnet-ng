@@ -31,4 +31,17 @@ describe('ComplaintCases', function() {
       $httpBackend.flush();
     });
   });
+
+  it('should call the checkup endpoint', function() {
+    var complaintId = 'abcd1234';
+    var url = [BASE_URL, 'api/2.0', 'complaint_cases', complaintId, 'checkup'].join('/');
+
+    auth.setPrivateToken('testing');
+
+    $httpBackend.expectGET(url).respond(200, {});
+
+    ComplaintCases.checkup(complaintId).then(function() {
+      $httpBackend.flush();
+    });
+  });
 });

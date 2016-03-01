@@ -744,6 +744,13 @@ module.exports = function(emResourceFactory, energimolnetAPI) {
     });
   };
 
+  ComplaintCases.checkup = function checkup(id) {
+      return energimolnetAPI.request({
+          url: '/complaint_cases/' + id + '/checkup',
+          method: 'GET'
+      });
+  };
+
   return ComplaintCases;
 };
 
