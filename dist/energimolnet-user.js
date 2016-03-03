@@ -802,6 +802,20 @@ module.exports = function(emResourceFactory, energimolnetAPI) {
     });
   };
 
+  Readings.batch = function batch(data, id) {
+    var url = this._config.default;
+
+    if (id !== undefined) {
+      url += '/' + id;
+    }
+
+    return energimolnetAPI.request({
+      method: 'POST',
+      url: url,
+      data: data
+    });
+  };
+
   return Readings;
 };
 
