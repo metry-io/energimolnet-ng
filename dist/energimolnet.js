@@ -535,7 +535,7 @@ module.exports = function($http, $q, $rootScope, Auth, BASE_URL) {
             }
           }
 
-          reject(res.data ? res.data.errors : res);
+          reject((res.data && res.data.errors) ? res.data.errors : res);
         });
       }, function() {
         loginNeeded();
