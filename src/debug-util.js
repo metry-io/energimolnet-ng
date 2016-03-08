@@ -22,7 +22,6 @@ module.exports = function (
   emCalculatedMetrics,
   emConsumptionStats,
   emConsumptions,
-  emEdielJobs,
   emFeeds,
   emFileJobs,
   emFtpConnections,
@@ -70,7 +69,6 @@ module.exports = function (
     em.CalculatedMetrics = emCalculatedMetrics;
     em.ConsumptionStats = emConsumptionStats;
     em.Consumptions = emConsumptions;
-    em.EdielJobs = emEdielJobs;
     em.Feeds = emFeeds;
     em.FileJobs = emFileJobs;
     em.FtpConnections = emFtpConnections;

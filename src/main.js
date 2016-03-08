@@ -29,7 +29,6 @@ ngModule
     .factory('emComplaints', ['emResourceFactory', require('./models/complaints')])
     .factory('emConsumptionStats', ['emResourceFactory', require('./models/consumption-stats')])
     .factory('emConsumptions', ['emResourceFactory', 'energimolnetAPI', require('./models/consumptions')])
-    .factory('emEdielJobs', ['emResourceFactory', require('./models/ediel-jobs')])
     .factory('emFeeds', ['emResourceFactory', require('./models/feeds')])
     .factory('emFileJobs', ['emResourceFactory', 'energimolnetAPI', require('./models/file-jobs')])
     .factory('emFtpConnections', ['emResourceFactory', require('./models/ftp-connections')])
@@ -43,7 +42,6 @@ ngModule
     .factory('emOwners', ['emResourceFactory', require('./models/owners')])
     .factory('emPassword', ['emResourceFactory', require('./models/password')])
     .factory('emReadings', ['emResourceFactory', 'energimolnetAPI', require('./models/readings')])
-    .factory('emEdielJobs', ['emResourceFactory', require('./models/ediel-jobs')])
     .factory('emRefreshTokens', ['emResourceFactory', require('./models/refreshtokens')])
     .factory('emReports', ['emResourceFactory', require('./models/reports')])
     .factory('emRobotJobs', ['emResourceFactory', require('./models/robot-jobs')])
@@ -55,4 +53,4 @@ ngModule
     .factory('emSubscribers', ['emResourceFactory', 'energimolnetAPI', require('./models/subscribers')])
     .factory('emTokens', ['emResourceFactory', require('./models/tokens')])
 
-    .run(['$window', 'emAccounts', 'emApps', 'emClients', 'emComplaintCases', 'emComplaintHandlers', 'emComplaints', 'emCalculatedMetrics', 'emConsumptionStats', 'emConsumptions', 'emEdielJobs', 'emFeeds', 'emFileJobs', 'emFtpConnections', 'emInvitations', 'emLoginTokens', 'emMe', 'emMeters', 'emMeterStats', 'emMetricModels', 'emOwners', 'emPassword', 'emReadings', 'emRefreshTokens', 'emReports', 'emRobotJobs', 'emRobotStats', 'emRobots', 'emScrapers', 'emScraperTests', 'emSubaccounts', 'emSubscribers', 'emTokens', 'emDateUtil', 'energimolnetAPI', 'emAuth', require('./debug-util')]);
+    .run(['$window', 'emAccounts', 'emApps', 'emClients', 'emComplaintCases', 'emComplaintHandlers', 'emComplaints', 'emCalculatedMetrics', 'emConsumptionStats', 'emConsumptions', 'emFeeds', 'emFileJobs', 'emFtpConnections', 'emInvitations', 'emLoginTokens', 'emMe', 'emMeters', 'emMeterStats', 'emMetricModels', 'emOwners', 'emPassword', 'emReadings', 'emRefreshTokens', 'emReports', 'emRobotJobs', 'emRobotStats', 'emRobots', 'emScrapers', 'emScraperTests', 'emSubaccounts', 'emSubscribers', 'emTokens', 'emDateUtil', 'energimolnetAPI', 'emAuth', require('./debug-util')]);
