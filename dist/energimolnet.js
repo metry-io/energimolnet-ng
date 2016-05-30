@@ -653,7 +653,7 @@ module.exports = function(emResourceFactory) {
 },{}],7:[function(require,module,exports){
 module.exports = function(emResourceFactory) {
   var ActivityStream = emResourceFactory({
-    default: '/activityStream',
+    default: '/activitystream',
     get: true,
     query: true,
     put: false,
